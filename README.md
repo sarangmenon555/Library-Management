@@ -12,6 +12,9 @@ A console-based Library Management System written in C. It allows users to add b
 - Look up a specific book by its title
 - View the total number of books in the library
 - Supports up to **100 book records**
+- Graceful "not found" messages for author and title searches
+- Full library warning when the 100-book limit is reached
+- Invalid menu input handled via default case
 
 ---
 
@@ -73,10 +76,18 @@ No of books in library : 1
 
 Enter one of the above : 3
 Enter author name : PauloCoelho
-TheAlchemist PauloCoelho 208 299.000000
+TheAlchemist PauloCoelho 208 299.00
+
+Enter one of the above : 3
+Enter author name : UnknownAuthor
+No books found for author: UnknownAuthor
+
+Enter one of the above : 1
+Enter book name = ...
+Library is full. Cannot add more books.
 ```
 
-> **Note:** Because `scanf("%s", ...)` is used for input, book names and author names cannot contain spaces. Use joined words or underscores (e.g., `Paulo_Coelho`).
+> **Note:** Input is limited to 29 characters per field via `scanf("%29s", ...)`. Book names and author names cannot contain spaces — use joined words or underscores (e.g., `Paulo_Coelho`).
 
 ---
 
@@ -87,9 +98,10 @@ TheAlchemist PauloCoelho 208 299.000000
 | `struct library` | Holds a single book record: name, author, pages, and price |
 | `l[100]` | Array of up to 100 book records |
 | `keepcount` | Tracks the number of books added |
-| `case 1` | Reads and stores a new book into the array |
-| `case 2` | Iterates and prints all stored records |
-| `case 3` | Searches records by author using `strcmp` |
-| `case 4` | Searches records by book name using `strcmp` |
+| `case 1` | Checks capacity, then reads and stores a new book into the array |
+| `case 2` | Iterates and prints all stored records; warns if library is empty |
+| `case 3` | Searches records by author using `strcmp`; prints message if not found |
+| `case 4` | Searches records by book name using `strcmp`; prints message if not found |
 | `case 5` | Prints the current value of `keepcount` |
 | `case 6` | Calls `exit(0)` to terminate the program |
+| `default` | Prints an error message for any invalid menu input |
