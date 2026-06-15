@@ -25,57 +25,75 @@ int main() {
 
         switch (j) {
             case 1:
+                if (keepcount >= 100) {
+                    printf("Library is full. Cannot add more books.\n");
+                    break;
+                }
                 printf("Enter book name = ");
-                scanf("%s", l[i].bk_name);
-
+                scanf("%29s", l[i].bk_name);
                 printf("Enter author name = ");
-                scanf("%s", l[i].author);
-
+                scanf("%29s", l[i].author);
                 printf("Enter pages = ");
                 scanf("%d", &l[i].pages);
-
                 printf("Enter price = ");
                 scanf("%f", &l[i].price);
-
                 keepcount++;
                 i++;
                 break;
 
             case 2:
+                if (keepcount == 0) {
+                    printf("No books available.\n");
+                    break;
+                }
                 printf("You have entered the following information\n");
                 for (int k = 0; k < keepcount; k++) {
                     printf("\nBook name = %s", l[k].bk_name);
                     printf("\tAuthor name = %s", l[k].author);
                     printf("\tPages = %d", l[k].pages);
-                    printf("\tPrice = %f", l[k].price);
+                    printf("\tPrice = %.2f", l[k].price);
                 }
                 break;
 
             case 3:
                 printf("Enter author name : ");
-                scanf("%s", ar_nm);
+                scanf("%29s", ar_nm);
+                int found3 = 0;
                 for (int k = 0; k < keepcount; k++) {
-                    if (strcmp(ar_nm, l[k].author) == 0)
-                        printf("%s %s %d %f\n", l[k].bk_name, l[k].author, l[k].pages, l[k].price);
+                    if (strcmp(ar_nm, l[k].author) == 0) {
+                        printf("%s %s %d %.2f\n", l[k].bk_name, l[k].author, l[k].pages, l[k].price);
+                        found3 = 1;
+                    }
                 }
+                if (!found3)
+                    printf("No books found for author: %s\n", ar_nm);
                 break;
 
             case 4:
                 printf("Enter book name : ");
-                scanf("%s", bk_nm);
+                scanf("%29s", bk_nm);
+                int found4 = 0;
                 for (int k = 0; k < keepcount; k++) {
-                    if (strcmp(bk_nm, l[k].bk_name) == 0)
-                        printf("%s \t %s \t %d \t %f\n", l[k].bk_name, l[k].author, l[k].pages, l[k].price);
+                    if (strcmp(bk_nm, l[k].bk_name) == 0) {
+                        printf("%s\t%s\t%d\t%.2f\n", l[k].bk_name, l[k].author, l[k].pages, l[k].price);
+                        found4 = 1;
+                    }
                 }
+                if (!found4)
+                    printf("No book found with name: %s\n", bk_nm);
                 break;
 
             case 5:
-                printf("\nNo of books in library : %d", keepcount);
+                printf("\nNo of books in library : %d\n", keepcount);
                 break;
 
             case 6:
                 exit(0);
+
+            default:
+                printf("Invalid option. Please enter a number between 1 and 6.\n");
         }
     }
+
     return 0;
 }
